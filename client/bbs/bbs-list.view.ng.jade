@@ -1,0 +1,85 @@
+.bbs-list(layout='row')
+  span(flex='')
+  div(layout='column')
+    h1 Рекламные поверхности
+    form.md-whiteframe-z1(ng-submit='save()', name='form', novalidate='', layout-padding='')
+      h3 Создать новую рекламную поверхность
+      md-switch(ng-model="newBb.isInStock" ng-true-value="'В продаже'" ng-false-value="'Недоступно клиентам'" aria-label="В продаже") {{newBb.isInStock}}
+      md-input-container
+        label Название
+        input(ng-model='newBb.name', placeholder='Пример: Баннер на здании администрации')
+      md-input-container
+        label Примечание
+        textarea(ng-model='newBb.comment', placeholder='Пример: Не забыть добавить фото с улицы!')
+      md-input-container
+        label Тип рекламной поверхности
+        md-select(ng-model='newBb.type')
+          md-option(ng-value='type.id' ng-repeat="type in types") {{type.name}}
+      md-switch(ng-model="newBb.backlight" ng-true-value="'С подсветкой'" ng-false-value="'Без подсветки'" aria-label="Подсветка") {{newBb.backlight}}
+      div(layout='row', layout-padding='')
+        md-input-container(flex='40')
+          label Широта
+          input(ng-model='newBb.lat')
+        md-input-container(flex='40')
+          label Долгота
+          input(ng-model='newBb.lon')
+        md-button(flex='20') 
+          md-icon.material-icons place
+      h4 Стороны
+      //- md-list
+        md-subheader.md-no-sticky Стороны
+        md-list-item.md-3-line(ng-click='')
+          .md-list-item-text(layout='column')
+            h3 Сторона A
+            p Test text
+          md-switch.md-secondary(ng-model="inStock" aria-label="В продаже")
+          //- h2(flex='10') A
+          //- md-input-container(flex='20')
+            label Ориентация
+            input(ng-model='direction')
+          //- md-input-container(flex='20')
+            label Цена
+            input(ng-model='price')
+      //- md-list
+        md-list-item(layout='row')
+          div(flex='10')
+            h2 A
+          div(flex='' layout='column')
+            div(layout='row')
+              md-input-container(flex='20')
+                label Ориентация
+                input(ng-model='direction')
+              md-slider(ng-model="direction" min="0" max="359" flex="80")
+            div(layout='row')
+              md-input-container(flex='20')
+                label Цена
+                input(ng-model='price')
+      md-card
+        md-card-content
+          div(layout='row' layout-wrap='' layout-align='start center')
+            div(flex='10')
+              h2 A
+            div(flex='40')
+              md-checkbox(ng-model="inStock" aria-label="В продаже") {{ inStock ? 'В продаже' : 'Недоступно' }}
+            div(flex='20')
+              md-input-container
+                label Цена
+                input(ng-model='price')
+      input.md-button.md-raised(type='submit', value='Создать')
+    div(layout='row', layout-padding='')
+      md-input-container(flex='65')
+        label Поиск
+        input(type='search', ng-model='search', placeholder='Искать')
+      md-select(ng-model='orderProperty', flex='35' aria-label="Сортировка результатов поиска")
+        md-option(value='1') Возрастание
+        md-option(value='-1') Убывание
+
+    ul
+      li(dir-paginate='bb in bbs | itemsPerPage: perPage', total-items='bbsCount.count',  current-page='page')
+        p 
+          a(href='/bbs/{{bb._id}}') {{ bb.name }}
+          button(ng-click='remove(bb)') &times;
+    dir-pagination-controls.md-accent(on-page-change='pageChanged(newPageNumber)')
+
+    p Всего рекламных поверхностей: {{bbsCount.count}}
+  span(flex='')

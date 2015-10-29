@@ -1,0 +1,14 @@
+{
+  "generator-angular-meteor": {
+    "filters": {
+      "js": true,
+      "jade": true,
+      "stylus": true,
+      "pagination": true,
+      "framework": "material",
+      "bower": true,
+      "auth": true
+    },
+    "appname": "bb"
+  }
+}
